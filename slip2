@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change Preferences</title>
+</head>
+<body>
+    <h1>Change Preferences</h1>
+
+    <form action="secondpage.php" method="post">
+        
+        <label for="fontstyle">Font Style:</label>
+        <select name="fontstyle" id="fontstyle">
+            <option value="Arial">Arial</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Verdana">Verdana</option>
+        </select>
+        <br><br>
+
+        <label for="fontsize">Font Size:</label>
+        <select name="fontsize" id="fontsize">
+            <option value="12">12</option>
+            <option value="14">14</option>
+            <option value="16">16</option>
+        </select>
+        <br><br>
+
+        <label for="fontcolor">Font Color:</label>
+        <input type="color" name="fontcolor" id="fontcolor">
+        <br><br>
+
+        <label for="bgcolor">Background Color:</label>
+        <input type="color" name="bgcolor" id="bgcolor">
+        <br><br>
+
+        <input type="submit" name="submit" value="Save">
+    </form>
+</body>
+</html>
+
+
+<?php
+if (isset($_POST['submit'])) {
+
+    $fontstyle = $_POST['fontstyle'];
+    $fontsize  = $_POST['fontsize'];
+    $fontcolor = $_POST['fontcolor'];
+    $bgcolor   = $_POST['bgcolor'];
+
+    // Set cookies (valid for 1 day)
+    setcookie('fontstyle', $fontstyle, time() + 86400);
+    setcookie('fontsize', $fontsize, time() + 86400);
+    setcookie('fontcolor', $fontcolor, time() + 86400);
+    setcookie('bgcolor', $bgcolor, time() + 86400);
+
+    // Redirect to third page
+    header("Location: thirdpage.php");
+    exit();
+}
+?>
+
+<?php
+// Get cookie values or set defaults
+$fontstyle = isset($_COOKIE['fontstyle']) ? $_COOKIE['fontstyle'] : 'Arial';
+$fontsize  = isset($_COOKIE['fontsize']) ? $_COOKIE['fontsize'] : '12';
+$fontcolor = isset($_COOKIE['fontcolor']) ? $_COOKIE['fontcolor'] : '#000000';
+$bgcolor   = isset($_COOKIE['bgcolor']) ? $_COOKIE['bgcolor'] : '#FFFFFF';
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page with New Settings</title>
+
+    <style>
+        body {
+            font-family: <?php echo $fontstyle; ?>;
+            font-size: <?php echo $fontsize; ?>px;
+            color: <?php echo $fontcolor; ?>;
+            background-color: <?php echo $bgcolor; ?>;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Page with New Settings</h1>
+
+    <p>
+        This page uses your saved preferences.<br>
+        Font Style: <?php echo $fontstyle; ?><br>
+        Font Size: <?php echo $fontsize; ?>px<br>
+        Font Color: <?php echo $fontcolor; ?><br>
+        Background Color: <?php echo $bgcolor; ?>
+    </p>
+
+</body>
+</html>
+
+# Step 1: Import libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+# Step 2: Create Salary Dataset
+data = {
+    'YearsExperience': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'Salary': [25000, 30000, 35000, 40000, 50000, 55000, 60000, 65000, 70000, 80000]
+}
+
+df = pd.DataFrame(data)
+
+print("Dataset:\n")
+print(df)
+
+# Step 3: Identify independent and target variables
+X = df[['YearsExperience']]   # Independent variable
+y = df['Salary']              # Target variable
+
+# Step 4: Split dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+print("\nX_train:\n", X_train)
+print("\nX_test:\n", X_test)
+print("\ny_train:\n", y_train)
+print("\ny_test:\n", y_test)
+
+# Step 5: Build Linear Regression Model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Step 6: Predict salary for test data
+y_pred = model.predict(X_test)
+
+print("\nPredicted Salaries:\n", y_pred)
+
+# Step 7: Display model parameters
+print("\nIntercept:", model.intercept_)
+print("Coefficient:", model.coef_)
+
+# Step 8: Visualization (Training set)
+plt.scatter(X_train, y_train, color='blue')
+plt.plot(X_train, model.predict(X_train), color='red')
+plt.title('Salary vs Experience (Training set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
+
+# Step 9: Visualization (Test set)
+plt.scatter(X_test, y_test, color='green')
+plt.plot(X_train, model.predict(X_train), color='red')
+plt.title('Salary vs Experience (Test set)')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.show()
