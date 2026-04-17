@@ -1,0 +1,45 @@
+<?xml version="1.0"?> 
+<items> 
+<item type="Electronics"> 
+<name>TV</name> 
+<rate>500</rate> 
+<quantity>10</quantity> 
+</item> 
+<item type="Clothing"> 
+<name>Shirt</name> 
+<rate>50</rate> 
+<quantity>20</quantity> 
+</item> 
+<item type="Grocery"> 
+<name>Rice</name> 
+<rate>40</rate> 
+<quantity>30</quantity> 
+</item> 
+<item type="Books"> 
+<name>Python</name> 
+<rate>20</rate> 
+<quantity>15</quantity> 
+</item> 
+<item type="Sports"> 
+<name>Football</name> 
+<rate>100</rate> 
+<quantity>5</quantity> 
+</item> 
+</items>
+
+
+ 
+import pandas as pd 
+from sklearn.datasets import load_iris 
+from sklearn.linear_model import LogisticRegression 
+from sklearn.model_selection import train_test_split 
+iris = load_iris() 
+df = pd.DataFrame(iris.data, columns=iris.feature_names) 
+df['target'] = iris.target 
+print(df.describe()) 
+X = df.iloc[:,:-1] 
+y = df['target'] 
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.3) 
+model = LogisticRegression(max_iter=200) 
+model.fit(X_train,y_train) 
+print("Accuracy:", model.score(X_test,y_test))
