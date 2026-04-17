@@ -1,0 +1,61 @@
+page1.php 
+<?php 
+session_start(); 
+?> 
+<form method="post" action="page2.php"> 
+Employee No: <input type="text" name="eno"><br><br> 
+Name: <input type="text" name="ename"><br><br> 
+Address: <input type="text" name="addr"><br><br> 
+<input type="submit" value="Next"> 
+</form> 
+<?php 
+if(isset($_POST['eno'])){ 
+$_SESSION['eno']=$_POST['eno']; 
+$_SESSION['ename']=$_POST['ename']; 
+$_SESSION['addr']=$_POST['addr']; 
+} 
+?> 
+page2.php 
+<?php 
+session_start(); 
+?> 
+<form method="post" action="page3.php"> 
+Basic: <input type="text" name="basic"><br><br> 
+DA: <input type="text" name="da"><br><br> 
+HRA: <input type="text" name="hra"><br><br> 
+<input type="submit" value="Next"> 
+</form> 
+<?php 
+if(isset($_POST['basic'])){ 
+$_SESSION['basic']=$_POST['basic']; 
+$_SESSION['da']=$_POST['da']; 
+$_SESSION['hra']=$_POST['hra']; 
+} 
+?> 
+page3.php 
+<?php 
+session_start(); 
+$total = $_SESSION['basic'] + $_SESSION['da'] + $_SESSION['hra']; 
+echo "<h2>Employee Details</h2>"; 
+echo "No: ".$_SESSION['eno']."<br>"; 
+echo "Name: ".$_SESSION['ename']."<br>"; 
+echo "Address: ".$_SESSION['addr']."<br>"; 
+echo "Basic: ".$_SESSION['basic']."<br>"; 
+echo "DA: ".$_SESSION['da']."<br>"; 
+echo "HRA: ".$_SESSION['hra']."<br>"; 
+echo "Total: ".$total; 
+?>
+
+import pandas as pd 
+from sklearn.linear_model import LinearRegression 
+# Sample dataset 
+data = { 
+'Length':[10,12,15,18,20], 
+'Weight':[100,150,200,250,300] 
+} 
+df = pd.DataFrame(data) 
+X = df[['Length']] 
+y = df['Weight'] 
+model = LinearRegression() 
+model.fit(X,y) 
+print("Prediction for length 16:", model.predict([[16]])) 
