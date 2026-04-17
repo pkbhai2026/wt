@@ -1,99 +1,34 @@
-<?php
-session_start();
-
-// Initialize attempt counter
-if (!isset($_SESSION['attempts'])) {
-    $_SESSION['attempts'] = 0;
-}
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-
-<h2>Login Form</h2>
-
-<form action="check.php" method="post">
-    Username: <input type="text" name="username" required><br><br>
-    Password: <input type="password" name="password" required><br><br>
-    <input type="submit" value="Login">
-</form>
-
-<p style="color:red;">
-<?php
-if (isset($_SESSION['error'])) {
-    echo $_SESSION['error'];
-    unset($_SESSION['error']);
-}
-?>
-</p>
-
-</body>
-</html>
+<?php 
+session_start(); 
+ 
+$correct_user = "admin"; 
+$correct_pass = "123"; 
+ 
+if(!isset($_SESSION['attempts'])) { 
+    $_SESSION['attempts'] = 3; 
+} 
+ 
+if(isset($_POST['login'])) { 
+ 
+    $u = $_POST['username']; 
+    $p = $_POST['password']; 
+ 
+    if($u == $correct_user && $p == $correct_pass) { 
+        echo "<h2>Welcome User!</h2>"; 
+    } else { 
+        $_SESSION['attempts']--; 
+ 
+        if($_SESSION['attempts'] <= 0) { 
+            echo "<h2>Access Denied</h2>"; 
+        } else { 
+            echo "<h3>Wrong Credentials. Attempts left: ".$_SESSION['attempts']."</h3>"; 
+        } 
+    } 
+} 
+?> 
 
 
-<?php
-session_start();
 
-// Correct credentials
-$correct_user = "admin";
-$correct_pass = "1234";
-
-// Get form data
-$username = $_POST['username'];
-$password = $_POST['password'];
-
-// Check attempts
-if ($_SESSION['attempts'] < 3) {
-
-    if ($username == $correct_user && $password == $correct_pass) {
-        $_SESSION['attempts'] = 0; // reset attempts
-        header("Location: welcome.php");
-        exit();
-    } else {
-        $_SESSION['attempts']++;
-
-        if ($_SESSION['attempts'] >= 3) {
-            $_SESSION['error'] = "Maximum attempts reached!";
-        } else {
-            $_SESSION['error'] = "Invalid username or password. Attempts left: " . (3 - $_SESSION['attempts']);
-        }
-
-        header("Location: login.php");
-        exit();
-    }
-
-} else {
-    $_SESSION['error'] = "You have exceeded 3 attempts!";
-    header("Location: login.php");
-    exit();
-}
-?>
-
-<?php
-session_start();
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome Page</title>
-</head>
-<body>
-
-<h2>Welcome!</h2>
-<p>You have successfully logged in.</p>
-
-<form>
-    <label>Enter Something:</label>
-    <input type="text" name="data">
-</form>
-
-</body>
-</html>
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
